@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.core.logging import setup_logging
-from app.api.v1 import health, chat
+from app.api.v1 import health, chat, documents
 from app.core.exceptions import add_exception_handlers
 
 # Setup logging
@@ -27,9 +27,10 @@ add_exception_handlers(app)
 
 app.include_router(health.router, prefix=settings.API_V1_STR)
 app.include_router(chat.router, prefix=settings.API_V1_STR)
+app.include_router(documents.router, prefix=settings.API_V1_STR)
 
 # TODO: Include other routers as they are implemented
-# from app.api.v1 import documents, rag, resume, interview, summary, workflows
+# from app.api.v1 import rag, resume, interview, summary, workflows
 # app.include_router(chat.router, prefix=settings.API_V1_STR)
 # app.include_router(documents.router, prefix=settings.API_V1_STR)
 # app.include_router(rag.router, prefix=settings.API_V1_STR)
