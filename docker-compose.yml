@@ -37,8 +37,8 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: ai_auto
+      POSTGRES_PASSWORD: 12345
       POSTGRES_DB: aiauto
     volumes:
       - postgres_data:/var/lib/postgresql/data

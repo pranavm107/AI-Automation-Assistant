@@ -1,0 +1,6 @@
+This is a sample text document.
+It has multiple lines.
+
+
+
+And some extra     spacing.

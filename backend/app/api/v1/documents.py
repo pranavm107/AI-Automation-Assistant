@@ -3,7 +3,11 @@ from sqlalchemy.orm import Session
 from uuid import UUID
 from app.database.session import get_db
 from app.services.document_service import DocumentService
-from app.schemas.document import DocumentUploadResponse, DocumentListResponse, DocumentDetailResponse, DocumentDeleteResponse
+from app.schemas.document import (
+    DocumentUploadResponse, DocumentListResponse, 
+    DocumentDetailResponse, DocumentDeleteResponse,
+    DocumentProcessingResponse, DocumentContentResponse
+)
 
 router = APIRouter(prefix="/documents", tags=["documents"])
 
@@ -29,3 +33,13 @@ def delete_document(document_id: UUID, db: Session = Depends(get_db)):
     document_service = DocumentService(db)
     document_service.delete_document(document_id)
     return DocumentDeleteResponse(success=True, message="Document deleted successfully")
+
+@router.post("/{document_id}/process", response_model=DocumentProcessingResponse, description="Execute extraction pipeline.")
+def process_document(document_id: UUID, db: Session = Depends(get_db)):
+    document_service = DocumentService(db)
+    return document_service.process_document(document_id)
+
+@router.get("/{document_id}/content", response_model=DocumentContentResponse, description="Return processed document content.")
+def get_document_content(document_id: UUID, db: Session = Depends(get_db)):
+    document_service = DocumentService(db)
+    return document_service.get_document_content(document_id)

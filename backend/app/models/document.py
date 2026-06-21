@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import Column, String, Integer, DateTime
+from sqlalchemy import Column, String, Integer, DateTime, Boolean
 from sqlalchemy.dialects.postgresql import UUID
 from datetime import datetime
 from app.database.session import Base
@@ -14,5 +14,7 @@ class Document(Base):
     file_size = Column(Integer, nullable=False)
     file_path = Column(String, nullable=False)
     upload_status = Column(String, nullable=False, default='uploaded')
+    processed = Column(Boolean, default=False)
+    processed_at = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

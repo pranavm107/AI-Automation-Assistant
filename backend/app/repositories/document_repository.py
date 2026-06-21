@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 from app.models.document import Document
 from uuid import UUID
 from typing import List, Optional
+from datetime import datetime
 
 class DocumentRepository:
     def __init__(self, db: Session):
@@ -22,3 +23,12 @@ class DocumentRepository:
     def delete(self, document: Document) -> None:
         self.db.delete(document)
         self.db.commit()
+
+    def mark_processed(self, document_id: UUID) -> Optional[Document]:
+        document = self.get_by_id(document_id)
+        if document:
+            document.processed = True
+            document.processed_at = datetime.utcnow()
+            self.db.commit()
+            self.db.refresh(document)
+        return document
