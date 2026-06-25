@@ -17,8 +17,8 @@ from app.core.exceptions import AppError
 logger = logging.getLogger(__name__)
 
 class DocumentService:
-    def __init__(self, db: Session):
-        self.repository = DocumentRepository(db)
+    def __init__(self, db: Session, owner_id: UUID):
+        self.repository = DocumentRepository(db, owner_id)
         self.upload_service = UploadService()
         self.processing_service = DocumentProcessingService()
 
